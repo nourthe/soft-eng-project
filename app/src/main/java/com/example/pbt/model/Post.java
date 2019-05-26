@@ -1,8 +1,11 @@
 package com.example.pbt.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Post {
+public class Post extends Entry {
+
+
 
     private String description;
 
@@ -19,10 +22,22 @@ public class Post {
     }
 
     public List<Comment> getCommentList() {
+        if (mCommentList == null) mCommentList = new ArrayList<>();
         return mCommentList;
     }
 
     public void setCommentList(List<Comment> commentList) {
         mCommentList = commentList;
+    }
+
+    public static boolean isPostValidForPublishing(Post p) {
+        if (p.getAuthor() == null) return false;
+        if (p.getLikes().size() != 0) return false;
+        if (p.getCommentList().size() != 0) return false;
+        if (p.getTitle().isEmpty()) return false;
+        if (p.getDescription().isEmpty()) return false;
+        if (p.getDate() == null) return false;
+
+        return true;
     }
 }

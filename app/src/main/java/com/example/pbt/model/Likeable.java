@@ -1,14 +1,18 @@
 package com.example.pbt.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Likeable {
 
     private List<User> mUserList;
 
+    public Likeable() {
+        mUserList = new ArrayList<>();
+    }
 
     public void like(User u) {
-        mUserList.add(u);
+        if (!this.isLikedByUser(u)) mUserList.add(u);
     }
 
     public long getLikesCount() {
@@ -25,4 +29,5 @@ public abstract class Likeable {
     public List<User> getLikes() {
         return mUserList;
     }
+
 }
