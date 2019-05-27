@@ -1,5 +1,7 @@
 package com.example.pbt.data;
 
+import android.util.Log;
+
 import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
 import com.example.pbt.model.User;
@@ -16,7 +18,7 @@ public class PostData {
         mPBT = PBT;
     }
 
-    public void fetchLatestPosts() {
+    public void fetchLatestPosts(final int l) {
         // DB
         mPBT.setLatestPostsList(mockDbLatestPosts());
         // Server
@@ -24,14 +26,16 @@ public class PostData {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(l);
                 } catch (InterruptedException e) {
+                Log.i("temporal", "run: set");
                     e.printStackTrace();
                 }
                 if (mPBT == null) return;
+                Log.i("temporal", "run: set");
                 mPBT.setLatestPostsList(mockServerLatestPosts());
             }
-        });
+        }).start();
     }
 
     private List<Post> mockDbLatestPosts() {
