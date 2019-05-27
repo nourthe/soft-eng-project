@@ -55,6 +55,17 @@ public class PostUnitTest {
             assertThat(isPostValidForPublishing(p), is(false));
         }
     }
+    @Test
+    public void post_createPostWithUserWithEmptyName_postInvalid() {
+        Post post = generatePostWithUserButNoName();
+        assertThat(isPostValidForPublishing(post), is(false));
+    }
+    @Test
+    public void post_createPostWithUserWithNullName_postInvalid() {
+        Post post = generatePostWithUserButNullName();
+        assertThat(isPostValidForPublishing(post), is(false));
+    }
+
 
     @Test
     public void post_createValidPosts_postValid() {
@@ -63,6 +74,7 @@ public class PostUnitTest {
 
         assertThat(isPostValidForPublishing(post), is(true));
     }
+
 
 
 
@@ -118,6 +130,34 @@ public class PostUnitTest {
         return postsList;
     }
 
+    private Post generatePostWithUserButNoName() {
+        Post post;
+        post= new Post();
+
+        post.setDescription("aasdfsd");
+        post.setTitle("aasdfsd");
+        post.setDate(new Date());
+        User u = new User();
+        post.setAuthor(u);
+        post.setDescription("asdfkjsadfklsjd");
+        return post;
+    }
+
+    private Post generatePostWithUserButNullName() {
+        Post post;
+        post= new Post();
+
+        post.setDescription("aasdfsd");
+        post.setTitle("aasdfsd");
+        post.setDate(new Date());
+        User u = new User();
+        u.setName("");
+        post.setAuthor(u);
+        post.setDescription("asdfkjsadfklsjd");
+        return post;
+    }
+
+
     private Post generateValidPost() {
         Post post;
         post= new Post();
@@ -125,7 +165,9 @@ public class PostUnitTest {
         post.setDescription("aasdfsd");
         post.setTitle("aasdfsd");
         post.setDate(new Date());
-        post.setAuthor(new User());
+        User u = new User();
+        u.setName("example user");
+        post.setAuthor(u);
         post.setDescription("asdfkjsadfklsjd");
         return post;
     }

@@ -33,6 +33,8 @@ public class Post extends Entry {
 
     public static boolean isPostValidForPublishing(Post p) {
         if (p.getAuthor() == null) return false;
+        if (p.getAuthor().getName() == null) return false;
+        if (p.getAuthor().getName().isEmpty()) return false;
         if (p.getLikes().size() != 0) return false;
         if (p.getCommentList().size() != 0) return false;
         if (p.getTitle().isEmpty()) return false;
@@ -45,6 +47,6 @@ public class Post extends Entry {
     @NonNull
     @Override
     public String toString() {
-        return getTitle();
+        return getTitle() + " by " + getAuthor().getName();
     }
 }

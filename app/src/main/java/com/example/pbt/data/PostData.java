@@ -44,8 +44,11 @@ public class PostData {
             post.setDescription("DB descipadsfsd");
             post.setTitle("DB asdfasdf");
             post.setDate(new Date());
-            post.setAuthor(new User());
-        postList.add(post);
+            User user = new User();
+            user.setName("Db user");
+            post.setAuthor(user);
+
+        if (Post.isPostValidForPublishing(post)) postList.add(post);
         return postList;
     }
     private List<Post> mockServerLatestPosts() {
@@ -54,8 +57,11 @@ public class PostData {
             post.setDescription("Server asfasdf");
             post.setTitle("Server asdfjksadf");
             post.setDate(new Date());
-            post.setAuthor(new User());
-        postList.add(post);
+
+            User user = new User();
+            user.setName("Server user");
+            post.setAuthor(user);
+        if (Post.isPostValidForPublishing(post)) postList.add(post);
         return postList;
     }
 
