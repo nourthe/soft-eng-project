@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">PBT</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="post_image">Post image</string>
 </resources>

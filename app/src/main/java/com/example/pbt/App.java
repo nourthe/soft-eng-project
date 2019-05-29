@@ -1,4 +1,6 @@
 package com.example.pbt;
 
-public class App {
+import android.app.Application;
+
+public class App extends Application {
 }
