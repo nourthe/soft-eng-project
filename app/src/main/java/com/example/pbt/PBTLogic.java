@@ -14,8 +14,7 @@ public class PBTLogic {
     private User mCurrentUser;
 
     public int isPostLikedByUser(Post post, User user) {
-       for (Like l : post.getLikes()) {
-       }
+        return 0;
     }
 
     public List<Post> getRecentPosts() {

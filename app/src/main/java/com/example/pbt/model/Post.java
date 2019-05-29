@@ -1,10 +1,11 @@
 package com.example.pbt.model;
 
+import android.support.annotation.NonNull;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Post extends Entry {
-
 
 
     private String description;
@@ -32,6 +33,8 @@ public class Post extends Entry {
 
     public static boolean isPostValidForPublishing(Post p) {
         if (p.getAuthor() == null) return false;
+        if (p.getAuthor().getName() == null) return false;
+        if (p.getAuthor().getName().isEmpty()) return false;
         if (p.getLikes().size() != 0) return false;
         if (p.getCommentList().size() != 0) return false;
         if (p.getTitle().isEmpty()) return false;
@@ -39,5 +42,11 @@ public class Post extends Entry {
         if (p.getDate() == null) return false;
 
         return true;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return getTitle() + " by " + getAuthor().getName();
     }
 }

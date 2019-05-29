@@ -1,6 +1,8 @@
 package com.example.pbt;
 
 
+import android.arch.core.executor.testing.InstantTaskExecutorRule;
+
 import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
 import com.example.pbt.model.User;
@@ -9,7 +11,9 @@ import static com.example.pbt.model.Post.isPostValidForPublishing;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TestRule;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +21,10 @@ import java.util.List;
 
 public class PostUnitTest {
 
-    PBT pbt;
+    @Rule
+    public TestRule rule = new InstantTaskExecutorRule();
+
+    private PBT pbt;
 
 
     @Before
@@ -48,6 +55,17 @@ public class PostUnitTest {
             assertThat(isPostValidForPublishing(p), is(false));
         }
     }
+    @Test
+    public void post_createPostWithUserWithEmptyName_postInvalid() {
+        Post post = generatePostWithUserButNoName();
+        assertThat(isPostValidForPublishing(post), is(false));
+    }
+    @Test
+    public void post_createPostWithUserWithNullName_postInvalid() {
+        Post post = generatePostWithUserButNullName();
+        assertThat(isPostValidForPublishing(post), is(false));
+    }
+
 
     @Test
     public void post_createValidPosts_postValid() {
@@ -56,6 +74,7 @@ public class PostUnitTest {
 
         assertThat(isPostValidForPublishing(post), is(true));
     }
+
 
 
 
@@ -111,6 +130,34 @@ public class PostUnitTest {
         return postsList;
     }
 
+    private Post generatePostWithUserButNoName() {
+        Post post;
+        post= new Post();
+
+        post.setDescription("aasdfsd");
+        post.setTitle("aasdfsd");
+        post.setDate(new Date());
+        User u = new User();
+        post.setAuthor(u);
+        post.setDescription("asdfkjsadfklsjd");
+        return post;
+    }
+
+    private Post generatePostWithUserButNullName() {
+        Post post;
+        post= new Post();
+
+        post.setDescription("aasdfsd");
+        post.setTitle("aasdfsd");
+        post.setDate(new Date());
+        User u = new User();
+        u.setName("");
+        post.setAuthor(u);
+        post.setDescription("asdfkjsadfklsjd");
+        return post;
+    }
+
+
     private Post generateValidPost() {
         Post post;
         post= new Post();
@@ -118,7 +165,9 @@ public class PostUnitTest {
         post.setDescription("aasdfsd");
         post.setTitle("aasdfsd");
         post.setDate(new Date());
-        post.setAuthor(new User());
+        User u = new User();
+        u.setName("example user");
+        post.setAuthor(u);
         post.setDescription("asdfkjsadfklsjd");
         return post;
     }

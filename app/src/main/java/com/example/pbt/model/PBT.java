@@ -1,24 +1,31 @@
 package com.example.pbt.model;
 
+import android.arch.lifecycle.MutableLiveData;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class PBT {
 
-    List<Post> mLatestPostsList;
+    private MutableLiveData<List<Post>> mLatestPostsList;
 
+    public PBT() {
+        mLatestPostsList = new MutableLiveData<>();
+        mLatestPostsList.setValue(new ArrayList<Post>());
+    }
 
-
-
-
-    public List<Post> getLatestPostsList() {
+    public MutableLiveData<List<Post>> getLatestPostsList() {
         return mLatestPostsList;
     }
 
+
+
+
     public void setLatestPostsList(List<Post> latestPostsList) {
-        mLatestPostsList = latestPostsList;
+        mLatestPostsList.postValue(latestPostsList);
     }
 
     public int getPostsCount() {
-        return mLatestPostsList.size();
+        return mLatestPostsList.getValue().size();
     }
 }
