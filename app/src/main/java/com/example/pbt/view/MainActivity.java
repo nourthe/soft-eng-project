@@ -3,6 +3,7 @@ package com.example.pbt.view;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
@@ -35,20 +36,10 @@ public class MainActivity extends AppCompatActivity {
         initViews();
 
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-
         addListObserver();
+        addOnClickListeners();
     }
 
-    private void addListObserver() {
-        mViewModel.getRecentPosts().observe(this, new Observer<List<Post>>() {
-        @Override
-        public void onChanged(@Nullable List<Post> posts) {
-            //noinspection unchecked
-            ((ArrayAdapter)mListView.getAdapter()).addAll(posts);
-            ((ArrayAdapter)mListView.getAdapter()).notifyDataSetChanged();
-        }
-        });
-    }
 
     private void initViews() {
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -56,15 +47,30 @@ public class MainActivity extends AppCompatActivity {
 
         this.mListView = findViewById(R.id.listView);
         mListView.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_list_item_1));
+    }
+    private void addListObserver() {
+        mViewModel.getRecentPosts().observe(this, new Observer<List<Post>>() {
+        @Override
+        public void onChanged(@Nullable List<Post> posts) {
+            ((ArrayAdapter)mListView.getAdapter()).clear();
+            //noinspection unchecked
+            ((ArrayAdapter)mListView.getAdapter()).addAll(posts);
+            ((ArrayAdapter)mListView.getAdapter()).notifyDataSetChanged();
+        }
+        });
+    }
+
+    private void addOnClickListeners() {
         mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Snackbar.make(view,
-                    "Titulo del post: " + ((Post)(parent.getItemAtPosition(position))).getTitle(),
-                        Snackbar.LENGTH_SHORT)
-                        .show();
+                Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
+                intent.putExtra(PostDetailActivity.EXTRA_POST_ID, position);
+                startActivity(intent);
             }
         });
     }
+
+
 
 }

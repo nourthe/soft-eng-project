@@ -1,7 +1,5 @@
 package com.example.pbt.data;
 
-import android.util.Log;
-
 import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
 import com.example.pbt.model.User;
@@ -12,10 +10,15 @@ import java.util.List;
 
 public class PostData {
 
-    PBT mPBT;
+    private PBT mPBT;
 
-    public PostData(PBT PBT) {
-        mPBT = PBT;
+    private static PostData sPostData;
+
+    private PostData() {mPBT = new PBT();}
+
+    public static synchronized PostData get() {
+        if (sPostData == null) sPostData = new PostData();
+        return sPostData;
     }
 
     public void fetchLatestPosts(final int l) {
@@ -25,15 +28,17 @@ public class PostData {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                try {
-                    Thread.sleep(l);
-                } catch (InterruptedException e) {
-                Log.i("temporal", "run: set");
-                    e.printStackTrace();
-                }
+            try {
                 if (mPBT == null) return;
-                Log.i("temporal", "run: set");
-                mPBT.setLatestPostsList(mockServerLatestPosts());
+                Thread.sleep(l);
+
+                List<Post> newPostList= new ArrayList<>();
+                newPostList.addAll(mPBT.getLatestPostsList().getValue());
+                newPostList.addAll(mockServerLatestPosts());
+                mPBT.setLatestPostsList(newPostList);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
             }
         }).start();
     }
@@ -41,8 +46,8 @@ public class PostData {
     private List<Post> mockDbLatestPosts() {
         List<Post> postList=  new ArrayList<>();
         Post post = new Post();
-            post.setDescription("DB descipadsfsd");
             post.setTitle("DB asdfasdf");
+            post.setDescription("DB descipadsfsd");
             post.setDate(new Date());
             User user = new User();
             user.setName("Db user");
@@ -54,8 +59,8 @@ public class PostData {
     private List<Post> mockServerLatestPosts() {
         List<Post> postList=  new ArrayList<>();
         Post post = new Post();
-            post.setDescription("Server asfasdf");
             post.setTitle("Server asdfjksadf");
+            post.setDescription("Server asfasdf");
             post.setDate(new Date());
 
             User user = new User();
@@ -65,4 +70,7 @@ public class PostData {
         return postList;
     }
 
+    public PBT getPBT() {
+        return mPBT;
+    }
 }
