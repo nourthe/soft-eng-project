@@ -8,6 +8,7 @@ import java.util.List;
 public class PBT {
 
     private MutableLiveData<List<Post>> mLatestPostsList;
+    private User mCurrentUser;
 
     public PBT() {
         mLatestPostsList = new MutableLiveData<>();
@@ -27,5 +28,13 @@ public class PBT {
 
     public int getPostsCount() {
         return mLatestPostsList.getValue().size();
+    }
+
+    public void setCurrentUser(User currentUser) {
+        mCurrentUser = currentUser;
+    }
+
+    public User getCurrentUser() {
+        return mCurrentUser;
     }
 }

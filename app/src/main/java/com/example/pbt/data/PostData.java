@@ -70,6 +70,12 @@ public class PostData {
         return postList;
     }
 
+    public User getMockUser() {
+        User u = new User();
+        u.setName("Bruno");
+        return u;
+    }
+
     public PBT getPBT() {
         return mPBT;
     }
