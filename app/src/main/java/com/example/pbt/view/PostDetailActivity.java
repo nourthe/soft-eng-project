@@ -28,31 +28,5 @@ public class PostDetailActivity extends AppCompatActivity {
     }
 
 
-    private void initViews() {
-        Toolbar toolbar = findViewById(R.id.main_toolbar);
-        toolbar.setTitle("");
-        setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        mPost = mMainViewModel.getPost(getIntent().getIntExtra(EXTRA_POST_ID,0));
-        mButtonLike = findViewById(R.id.ib_like_post);
-        if (mMainViewModel.isPostLiked(mPost)) {
-            mButtonLike.setImageResource(R.drawable.ic_star_black_24dp);
-        } else {
-            mButtonLike.setImageResource(R.drawable.ic_star_border_black_24dp);
-        }
-        ((TextView)findViewById(R.id.postTitle)).setText(mPost.getTitle());
-        ((TextView)findViewById(R.id.postDescription)).setText(mPost.getDescription());
-    }
-
-    private void addClickListeners() {
-        mButtonLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mMainViewModel.likePost(mPost);
-            }
-        });
-    }
 }

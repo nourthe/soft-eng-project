@@ -36,6 +36,7 @@ public class MainViewModel extends ViewModel {
     public Post getPost(int i) {
         return mPBT.getLatestPostsList().getValue().get(i);
     }
+    
 
     public boolean isPostLiked(Post post) {
         return post.isLikedByUser(mPBT.getCurrentUser());
