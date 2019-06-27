@@ -12,6 +12,7 @@
         android:supportsRtl="false"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".view.Login"></activity>
         <activity android:name=".view.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,9 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".view.MainActivity">
-
-        </activity>
+        <activity android:name=".view.MainActivity"></activity>
         <activity
             android:name=".view.PostDetailActivity"
             android:parentActivityName=".view.MainActivity" />
