@@ -36,7 +36,6 @@ public class Post extends Entry {
         if (p.getAuthor().getName() == null) return false;
         if (p.getAuthor().getName().isEmpty()) return false;
         if (p.getLikes().size() != 0) return false;
-        if (p.getCommentList().size() != 0) return false;
         if (p.getTitle().isEmpty()) return false;
         if (p.getDescription().isEmpty()) return false;
         if (p.getDate() == null) return false;

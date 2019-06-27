@@ -1,5 +1,6 @@
 package com.example.pbt.data;
 
+import com.example.pbt.model.Comment;
 import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
 import com.example.pbt.model.User;
@@ -69,6 +70,9 @@ public class PostData {
         user3.setName("Db user 3");
         post3.setAuthor(user3);
 
+        post3.setDate(new Date());
+        post2.setDate(new Date());
+        post.setDate(new Date());
 
         if (Post.isPostValidForPublishing(post)) postList.add(post);
         if (Post.isPostValidForPublishing(post2)) postList.add(post2);
@@ -85,12 +89,23 @@ public class PostData {
             User user = new User();
             user.setName("Server user");
             post.setAuthor(user);
+            List<Comment> commentList = new ArrayList<>();
+            Comment c1 = new Comment();
+            c1.setAuthor(new User("Julian"));
+            c1.setTitle("Muy buen post");
+            Comment c2 = new Comment();
+            c2.setAuthor(new User("Bruno"));
+            c2.setTitle("No se entiende el post");
+            commentList.add(c1);
+            commentList.add(c2);
+            post.setCommentList(commentList);
         if (Post.isPostValidForPublishing(post)) postList.add(post);
 
 
         Post post2 = new Post();
-        post2.setTitle("El Concejo de La Plata reconoció al \"Batman Solidario\" por su ayuda a la comunidad");
+        post2.setTitle("La carne argentina llegó a los supermercados de Japón a 100 dólares el kilo");
         post2.setDescription("Server asfasdf");
+
         post2.setDate(new Date());
 
         User user2 = new User();
@@ -106,6 +121,10 @@ public class PostData {
         User user3 = new User();
         user3.setName("Server user");
         post3.setAuthor(user3);
+
+        post2.setDate(new Date());
+        post.setDate(new Date());
+        post3.setDate(new Date());
         if (Post.isPostValidForPublishing(post3)) postList.add(post3);
         return postList;
     }
