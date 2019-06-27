@@ -17,6 +17,7 @@ import com.example.pbt.R;
 import com.example.pbt.ViewModel.MainViewModel;
 import com.example.pbt.model.Post;
 import com.example.pbt.util.sort.EntryAuthorEntrySort;
+import com.example.pbt.util.sort.EntryDateEntrySort;
 import com.example.pbt.util.sort.EntryFilter;
 import com.example.pbt.util.sort.EntryTitleEntrySort;
 
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-        filter = new EntryTitleEntrySort();
+        filter = new EntryDateEntrySort();
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         filtrarPostAutor = findViewById(R.id.btn_filter_by_post_author);
         filtrarPostsTitulo = findViewById(R.id.btn_filter_by_post_title);

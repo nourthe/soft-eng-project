@@ -5,11 +5,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.pbt.R;
 import com.example.pbt.ViewModel.MainViewModel;
+import com.example.pbt.model.Comment;
 import com.example.pbt.model.Post;
 
 public class PostDetailActivity extends AppCompatActivity {
@@ -18,6 +21,7 @@ public class PostDetailActivity extends AppCompatActivity {
     private MainViewModel mMainViewModel;
     private Post mPost;
     private ImageButton mButtonLike;
+    private ListView commentsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +42,9 @@ public class PostDetailActivity extends AppCompatActivity {
         mMainViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         mPost = mMainViewModel.getPost(getIntent().getIntExtra(EXTRA_POST_ID,0));
         mButtonLike = findViewById(R.id.ib_like_post);
+        commentsList = findViewById(R.id.listaComentarios);
+        if (mPost.getCommentList().isEmpty()) ((TextView) (findViewById(R.id.textView3))).setText("No hay comentarios");
+        commentsList.setAdapter(new ArrayAdapter<Comment>(this,android.R.layout.simple_list_item_1,mPost.getCommentList()));
         if (mMainViewModel.isPostLiked(mPost)) {
             mButtonLike.setImageResource(R.drawable.ic_star_black_24dp);
         } else {
