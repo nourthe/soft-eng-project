@@ -10,6 +10,7 @@ import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
 import com.example.pbt.model.User;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -46,5 +47,11 @@ public class MainViewModel extends ViewModel {
 
     public void likePost(Post post) {
         post.like(mPBT.getCurrentUser());
+    }
+
+    public void addPost(Post p) {
+        List<Post> posts = new ArrayList<>(mPBT.getLatestPostsList().getValue());
+        posts.add(p);
+        mPBT.setLatestPostsList(posts);
     }
 }

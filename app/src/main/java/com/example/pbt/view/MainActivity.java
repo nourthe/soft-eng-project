@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     private MainViewModel mViewModel;
     private Button filtrarPostsTitulo;
     private Button filtrarPostAutor;
+    private View createPost;
     EntryFilter filter;
 
     @Override
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
         filtrarPostAutor = findViewById(R.id.btn_filter_by_post_author);
         filtrarPostsTitulo = findViewById(R.id.btn_filter_by_post_title);
+        createPost = findViewById(R.id.fab);
             addListObserver();
             addOnClickListeners();
     }
@@ -88,6 +90,14 @@ public class MainActivity extends AppCompatActivity {
                 mViewModel.notifyRecentPosts();
             }
         });
+
+        createPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new createPost().show(getSupportFragmentManager(),"Crear Post");
+            }
+        });
+
     }
 
 
