@@ -26,10 +26,12 @@ public class MainViewModel extends ViewModel {
     }
 
     public LiveData<List<Post>> getRecentPosts() {
-        mPostData.fetchLatestPosts(1000);
-        mPostData.fetchLatestPosts(3000);
-        mPostData.fetchLatestPosts(5000);
+        mPostData.fetchLatestPosts(2000);
         return mPBT.getLatestPostsList();
+    }
+
+    public void notifyRecentPosts() {
+        mPBT.setLatestPostsList(mPBT.getLatestPostsList().getValue());
     }
 
     @SuppressWarnings("ConstantConditions")

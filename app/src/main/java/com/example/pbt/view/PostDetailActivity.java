@@ -51,7 +51,13 @@ public class PostDetailActivity extends AppCompatActivity {
         mButtonLike.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 mMainViewModel.likePost(mPost);
+                if (mMainViewModel.isPostLiked(mPost)) {
+                    mButtonLike.setImageResource(R.drawable.ic_star_black_24dp);
+                } else {
+                    mButtonLike.setImageResource(R.drawable.ic_star_border_black_24dp);
+                }
             }
         });
     }

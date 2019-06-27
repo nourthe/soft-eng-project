@@ -1,26 +1,24 @@
 package com.example.pbt.view;
 
 import android.arch.lifecycle.Observer;
-import android.arch.lifecycle.ViewModelProvider;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.pbt.R;
 import com.example.pbt.ViewModel.MainViewModel;
-import com.example.pbt.data.PostData;
-import com.example.pbt.model.PBT;
 import com.example.pbt.model.Post;
+import com.example.pbt.util.sort.EntryAuthorEntrySort;
+import com.example.pbt.util.sort.EntryFilter;
+import com.example.pbt.util.sort.EntryTitleEntrySort;
 
 import java.util.List;
 
@@ -28,16 +26,21 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mListView;
     private MainViewModel mViewModel;
+    private Button filtrarPostsTitulo;
+    private Button filtrarPostAutor;
+    EntryFilter filter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initViews();
-
+        filter = new EntryTitleEntrySort();
         mViewModel = ViewModelProviders.of(this).get(MainViewModel.class);
-        addListObserver();
-        addOnClickListeners();
+        filtrarPostAutor = findViewById(R.id.btn_filter_by_post_author);
+        filtrarPostsTitulo = findViewById(R.id.btn_filter_by_post_title);
+            addListObserver();
+            addOnClickListeners();
     }
 
 
@@ -54,7 +57,8 @@ public class MainActivity extends AppCompatActivity {
         public void onChanged(@Nullable List<Post> posts) {
             ((ArrayAdapter)mListView.getAdapter()).clear();
             //noinspection unchecked
-            ((ArrayAdapter)mListView.getAdapter()).addAll(posts);
+
+            ((ArrayAdapter)mListView.getAdapter()).addAll(filter.filter(posts));
             ((ArrayAdapter)mListView.getAdapter()).notifyDataSetChanged();
         }
         });
@@ -67,6 +71,20 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(view.getContext(), PostDetailActivity.class);
                 intent.putExtra(PostDetailActivity.EXTRA_POST_ID, position);
                 startActivity(intent);
+            }
+        });
+        filtrarPostsTitulo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filter = new EntryTitleEntrySort();
+                mViewModel.notifyRecentPosts();
+            }
+        });
+        filtrarPostAutor.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                filter = new EntryAuthorEntrySort();
+                mViewModel.notifyRecentPosts();
             }
         });
     }
